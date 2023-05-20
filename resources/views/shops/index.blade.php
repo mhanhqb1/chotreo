@@ -65,12 +65,12 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "Do you really want to delete this product?",
+                title: "{{ __('Are you sure?') }}",
+                text: "{{ __('Do you really want to delete this product?') }}",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No',
+                confirmButtonText: "{{ __('Yes, delete it!') }}",
+                cancelButtonText: "{{ __('No') }}",
                 reverseButtons: true
                 }).then((result) => {
                 if (result.value) {

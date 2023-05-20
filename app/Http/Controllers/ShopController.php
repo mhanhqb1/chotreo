@@ -6,6 +6,7 @@ use App\Models\Shop;
 use App\Http\Requests\StoreShopRequest;
 use App\Http\Requests\UpdateShopRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
 {
@@ -30,7 +31,7 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //
+        return view('shops.create');
     }
 
     /**
@@ -38,7 +39,26 @@ class ShopController extends Controller
      */
     public function store(StoreShopRequest $request)
     {
-        //
+        $image_path = '';
+
+        if ($request->hasFile('logo')) {
+            $image_path = $request->file('logo')->store('shops', 'public');
+            // print_r($image_path); die();
+        }
+
+        $item = Shop::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'logo' => $image_path,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'status' => $request->status
+        ]);
+
+        if (!$item) {
+            return redirect()->back()->with('error', __('Sorry, there a problem while creating shop.'));
+        }
+        return redirect()->route('shops.index')->with('success', __('Success, your shop has been created.'));
     }
 
     /**
@@ -54,7 +74,7 @@ class ShopController extends Controller
      */
     public function edit(Shop $shop)
     {
-        //
+        return view('shops.edit')->with('item', $shop);
     }
 
     /**
@@ -62,7 +82,27 @@ class ShopController extends Controller
      */
     public function update(UpdateShopRequest $request, Shop $shop)
     {
-        //
+        $shop->name = $request->name;
+        $shop->description = $request->description;
+        $shop->address = $request->address;
+        $shop->phone = $request->phone;
+        $shop->status = $request->status;
+
+        if ($request->hasFile('logo')) {
+            // Delete old image
+            if ($shop->logo) {
+                Storage::delete($shop->logo);
+            }
+            // Store image
+            $image_path = $request->file('logo')->store('shops', 'public');
+            // Save to Database
+            $shop->logo = $image_path;
+        }
+
+        if (!$shop->save()) {
+            return redirect()->back()->with('error', __('Sorry, there\'re a problem while updating shop.'));
+        }
+        return redirect()->route('shops.index')->with('success', __('Success, your shop have been updated.'));
     }
 
     /**
@@ -70,6 +110,13 @@ class ShopController extends Controller
      */
     public function destroy(Shop $shop)
     {
-        //
+        if ($shop->logo) {
+            Storage::delete($shop->logo);
+        }
+        $shop->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

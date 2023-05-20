@@ -1,21 +1,21 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Product')
-@section('content-header', 'Edit Product')
+@section('title', __('Edit Product'))
+@section('content-header',  __('Edit Product'))
 
 @section('content')
 
 <div class="card">
     <div class="card-body">
 
-        <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('shops.update', $item) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">{{ __('Name') }}</label>
                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
-                    placeholder="Name" value="{{ old('name', $product->name) }}">
+                    placeholder="{{ __('Name') }}" value="{{ old('name', $item->name) }}">
                 @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -25,10 +25,10 @@
 
 
             <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description">{{ __('Description') }}</label>
                 <textarea name="description" class="form-control @error('description') is-invalid @enderror"
                     id="description"
-                    placeholder="description">{{ old('description', $product->description) }}</textarea>
+                    placeholder="{{ __('Description') }}">{{ old('description', $item->description) }}</textarea>
                 @error('description')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -37,12 +37,12 @@
             </div>
 
             <div class="form-group">
-                <label for="image">Image</label>
+                <label for="logo">{{ __('Logo') }}</label>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="image" id="image">
-                    <label class="custom-file-label" for="image">Choose file</label>
+                    <input type="file" class="custom-file-input" name="logo" id="logo">
+                    <label class="custom-file-label" for="logo">{{ __('Choose file') }}</label>
                 </div>
-                @error('image')
+                @error('logo')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -50,10 +50,10 @@
             </div>
 
             <div class="form-group">
-                <label for="barcode">Barcode</label>
-                <input type="text" name="barcode" class="form-control @error('barcode') is-invalid @enderror"
-                    id="barcode" placeholder="barcode" value="{{ old('barcode', $product->barcode) }}">
-                @error('barcode')
+                <label for="address">{{ __('Address') }}</label>
+                <input type="text" name="address" class="form-control @error('address') is-invalid @enderror"
+                    id="address" placeholder="{{ __('Address') }}" value="{{ old('address', $item->address) }}">
+                @error('address')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -61,10 +61,10 @@
             </div>
 
             <div class="form-group">
-                <label for="price">Price</label>
-                <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" id="price"
-                    placeholder="price" value="{{ old('price', $product->price) }}">
-                @error('price')
+                <label for="phone">{{ __('Phone') }}</label>
+                <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone"
+                    placeholder="{{ __('Phone') }}" value="{{ old('phone', $item->phone) }}">
+                @error('phone')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -72,21 +72,10 @@
             </div>
 
             <div class="form-group">
-                <label for="quantity">Quantity</label>
-                <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"
-                    id="quantity" placeholder="Quantity" value="{{ old('quantity', $product->quantity) }}">
-                @error('quantity')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status">{{ __('Status') }}</label>
                 <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
-                    <option value="1" {{ old('status', $product->status) === 1 ? 'selected' : ''}}>Active</option>
-                    <option value="0" {{ old('status', $product->status) === 0 ? 'selected' : ''}}>Inactive</option>
+                    <option value="1" {{ old('status', $item->status) === 1 ? 'selected' : ''}}>Active</option>
+                    <option value="0" {{ old('status', $item->status) === 0 ? 'selected' : ''}}>Inactive</option>
                 </select>
                 @error('status')
                 <span class="invalid-feedback" role="alert">
@@ -95,7 +84,7 @@
                 @enderror
             </div>
 
-            <button class="btn btn-primary" type="submit">Update</button>
+            <button class="btn btn-primary" type="submit">{{ __('Update') }}</button>
         </form>
     </div>
 </div>
