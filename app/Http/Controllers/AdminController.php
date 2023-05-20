@@ -30,4 +30,9 @@ class AdminController extends Controller
     {
         return view('admin.shop.index');
     }
+
+    public function shopAdd()
+    {
+        return view('admin.shop.add');
+    }
 }
