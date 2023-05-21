@@ -41,6 +41,12 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
+                    <a href="{{ route('categories.index') }}" class="nav-link {{ activeSegment('categories') }}">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>{{ __('Category menu') }}</p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
                     <a href="{{ route('cart.index') }}" class="nav-link {{ activeSegment('cart') }}">
                         <i class="nav-icon fas fa-cart-plus"></i>
                         <p>Open POS</p>

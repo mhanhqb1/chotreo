@@ -72,7 +72,7 @@
 
                 swalWithBootstrapButtons.fire({
                 title: 'Are you sure?',
-                text: "Do you really want to delete this product?",
+                text: "Do you really want to delete this item?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
