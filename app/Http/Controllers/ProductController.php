@@ -6,6 +6,8 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,7 +38,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::all();
+        return view('products.create', compact(
+            'categories'
+        ));
     }
 
     /**
@@ -67,6 +72,14 @@ class ProductController extends Controller
         if (!$product) {
             return redirect()->back()->with('error', 'Sorry, there a problem while creating product.');
         }
+        if (!empty($request->categories)) {
+            foreach ($request->categories as $cate) {
+                ProductCategory::create([
+                    'product_id' => $product->id,
+                    'category_id' => $cate
+                ]);
+            }
+        }
         return redirect()->route('products.index')->with('success', 'Success, you product have been created.');
     }
 
@@ -89,7 +102,15 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit')->with('product', $product);
+        $categories = Category::all();
+        $productCategories = ProductCategory::where('product_id', $product->id)
+            ->pluck('category_id')
+            ->toArray();
+        return view('products.edit')->with(compact(
+            'product',
+            'categories',
+            'productCategories'
+        ));
     }
 
     /**
@@ -121,6 +142,15 @@ class ProductController extends Controller
 
         if (!$product->save()) {
             return redirect()->back()->with('error', 'Sorry, there\'re a problem while updating product.');
+        }
+        ProductCategory::where('product_id', $product->id)->delete();
+        if (!empty($request->categories)) {
+            foreach ($request->categories as $cate) {
+                ProductCategory::create([
+                    'product_id' => $product->id,
+                    'category_id' => $cate
+                ]);
+            }
         }
         return redirect()->route('products.index')->with('success', 'Success, your product have been updated.');
     }

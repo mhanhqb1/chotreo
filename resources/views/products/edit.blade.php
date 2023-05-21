@@ -23,12 +23,21 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label for="category">{{ __('Category') }}</label>
+                <select name="categories[]" class="form-control select2" id="category" multiple="multiple">
+                    <option value="">-</option>
+                    @foreach ($categories as $cate)
+                    <option value="{{ $cate->id }}" {{ in_array($cate->id, $productCategories) ? 'selected="selected"' : '' }}>{{ $cate->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description">{{ __('Description') }}</label>
                 <textarea name="description" class="form-control @error('description') is-invalid @enderror"
                     id="description"
-                    placeholder="description">{{ old('description', $product->description) }}</textarea>
+                    placeholder="{{ __('Description') }}">{{ old('description', $product->description) }}</textarea>
                 @error('description')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -37,7 +46,13 @@
             </div>
 
             <div class="form-group">
-                <label for="image">Image</label>
+                @if (!empty($product->image))
+                <label for="old_image">{{ __('Image') }}</label>
+                <div>
+                    <img src="{{ Storage::url($product->image) }}" width="200px"/>
+                </div>
+                @endif
+                <label for="image">{{ __('New Image') }}</label>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="image" id="image">
                     <label class="custom-file-label" for="image">Choose file</label>
@@ -50,9 +65,9 @@
             </div>
 
             <div class="form-group">
-                <label for="barcode">Barcode</label>
+                <label for="barcode">{{ __('Barcode') }}</label>
                 <input type="text" name="barcode" class="form-control @error('barcode') is-invalid @enderror"
-                    id="barcode" placeholder="barcode" value="{{ old('barcode', $product->barcode) }}">
+                    id="barcode" placeholder="{{ __('Barcode') }}" value="{{ old('barcode', $product->barcode) }}">
                 @error('barcode')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -61,9 +76,9 @@
             </div>
 
             <div class="form-group">
-                <label for="price">Price</label>
+                <label for="price">{{ __('Price') }}</label>
                 <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" id="price"
-                    placeholder="price" value="{{ old('price', $product->price) }}">
+                    placeholder="{{ __('Price') }}" value="{{ old('price', $product->price) }}">
                 @error('price')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -72,9 +87,9 @@
             </div>
 
             <div class="form-group">
-                <label for="quantity">Quantity</label>
+                <label for="quantity">{{ __('Quantity') }}</label>
                 <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"
-                    id="quantity" placeholder="Quantity" value="{{ old('quantity', $product->quantity) }}">
+                    id="quantity" placeholder="{{ __('Quantity') }}" value="{{ old('quantity', $product->quantity) }}">
                 @error('quantity')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -83,7 +98,7 @@
             </div>
 
             <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status">{{ __('Status') }}</label>
                 <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
                     <option value="1" {{ old('status', $product->status) === 1 ? 'selected' : ''}}>Active</option>
                     <option value="0" {{ old('status', $product->status) === 0 ? 'selected' : ''}}>Inactive</option>
@@ -95,7 +110,7 @@
                 @enderror
             </div>
 
-            <button class="btn btn-primary" type="submit">Update</button>
+            <button class="btn btn-primary" type="submit">{{ __('Update') }}</button>
         </form>
     </div>
 </div>
