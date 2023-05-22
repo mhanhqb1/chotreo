@@ -125,8 +125,8 @@ class Cart extends Component {
         }
     }
 
-    addProductToCart(barcode) {
-        let product = this.state.products.find((p) => p.barcode === barcode);
+    addProductToCart(productId) {
+        let product = this.state.products.find((p) => p.id === productId);
         if (!!product) {
             // if product is already in cart
             let cart = this.state.cart.find((c) => c.id === product.id);
@@ -159,7 +159,7 @@ class Cart extends Component {
             }
 
             axios
-                .post("/admin/cart", { barcode })
+                .post("/admin/cart", { id: productId })
                 .then((res) => {
                     // this.loadCart();
                     console.log(res);
@@ -208,17 +208,6 @@ class Cart extends Component {
             <div className="row">
                 <div className="col-md-6 col-lg-4">
                     <div className="row mb-2">
-                        <div className="col">
-                            <form onSubmit={this.handleScanBarcode}>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Scan Barcode..."
-                                    value={barcode}
-                                    onChange={this.handleOnChangeBarcode}
-                                />
-                            </form>
-                        </div>
                         <div className="col">
                             <select
                                 className="form-control"
@@ -326,7 +315,7 @@ class Cart extends Component {
                     <div className="order-product">
                         {products.map((p) => (
                             <div
-                                onClick={() => this.addProductToCart(p.barcode)}
+                                onClick={() => this.addProductToCart(p.id)}
                                 key={p.id}
                                 className="item"
                             >

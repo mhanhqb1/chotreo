@@ -74,6 +74,16 @@
                 </span>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="suggest_price">{{ __('Suggest Price') }}</label>
+                <input type="text" name="suggest_price" class="form-control @error('suggest_price') is-invalid @enderror" id="suggest_price"
+                    placeholder="{{ __('Suggest Price') }}" value="{{ old('suggest_price', $product->suggest_price) }}">
+                @error('suggest_price')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
 
             <div class="form-group">
                 <label for="quantity">{{ __('Quantity') }}</label>

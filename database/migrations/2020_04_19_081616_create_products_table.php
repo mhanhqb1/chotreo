@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             // $table->string('barcode')->unique();
-            $table->decimal('price', 8, 2);
+            $table->integer('price');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

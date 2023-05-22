@@ -14,15 +14,16 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Actions</th>
+                    <th>{{ __('ID') }}</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Image') }}</th>
+                    <th>{{ __('Price') }}</th>
+                    <th>{{ __('Suggest Price') }}</th>
+                    <th>{{ __('Quantity') }}</th>
+                    <th>{{ __('Status') }}</th>
+                    <th>{{ __('Created At') }}</th>
+                    <th>{{ __('Updated At') }}</th>
+                    <th>{{ __('Actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +32,8 @@
                     <td>{{$product->id}}</td>
                     <td>{{$product->name}}</td>
                     <td><img class="product-img" src="{{ Storage::url($product->image) }}" alt=""></td>
-                    <td>{{$product->price}}</td>
+                    <td>{{ number_format($product->price) }}</td>
+                    <td>{{ number_format($product->suggest_price) }}</td>
                     <td>{{$product->quantity}}</td>
                     <td>
                         <span
